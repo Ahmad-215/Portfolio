@@ -14,14 +14,23 @@
 <!-- Icons (Font Awesome, for LinkedIn/GitHub/email icons) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<link rel="stylesheet" href="Style.css" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="favicon.ico">
+<!-- Font Awesome CDN -->
+
 </head>
 <body>
 
 <!-- ===================== NAVBAR ===================== -->
 <header class="navbar" id="navbar">
   <div class="nav-inner">
-    <a href="#home" class="logo">Ahmad<span>.dev</span></a>
+    <a href="#" class="logo">
+  <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+    <polygon points="12 6 15.5 8 15.5 12 12 14 8.5 12 8.5 8 12 6"></polygon>
+  </svg>
+  <span>.</span>
+</a>
 
     <nav class="nav-links" id="navLinks">
       <a href="#home" class="nav-link active-link" data-section="home">Home</a>
@@ -48,9 +57,9 @@
         I build fast, full-stack web experiences.
       </h1>
       <p class="hero-sub" data-reveal>
-        I specialize in the MERN stack, turning complex ideas into clean,
+        I specialize in the MERN stack and Next.js, turning complex ideas into clean,
         scalable, business-ready web applications — from responsive interfaces
-        to robust backend APIs.
+        to robust backend APIs, deployed on Vercel.
       </p>
 
       <div class="hero-actions" data-reveal>
@@ -74,8 +83,7 @@
     <div class="hero-visual">
       <div class="hero-blob"></div>
       <div class="hero-photo-wrap">
-        <!-- Replace with your own photo path -->
-        <img src="images/profile.jpg" alt="Ahmad Hassan" class="hero-photo" />
+        <img src="images/hero.jpg" alt="Ahmad Hassan" class="hero-photo" />
       </div>
       <div class="hero-ring hero-ring-blue"></div>
       <div class="hero-ring hero-ring-red"></div>
@@ -88,36 +96,33 @@
 </section>
 
 <!-- ===================== ABOUT ===================== -->
-<section class="section" id="about">
-  <div class="section-inner reverse">
-    <div class="section-media" data-reveal>
-      <div class="blur-image-wrap">
-        <!-- Replace with your own photo path -->
-        <img src="images/about.jpg" alt="Ahmad working" class="blur-image" />
-      </div>
-    </div>
-    <div class="section-content" data-reveal>
+<section class="section image-bg" id="about" style="--section-image:url('images/2.jpg');">
+  <div class="section-bg" data-reveal></div>
+  <div class="section-inner-single">
+    <div class="section-panel" data-reveal>
       <p class="section-tag">About Me</p>
       <h2>Building complete, business-ready web applications</h2>
       <p>
         I'm Ahmad Hassan, a Full-Stack Web Developer specializing in the MERN
-        stack — MongoDB, Express.js, React.js, and Node.js. I build fast,
-        scalable, and responsive web applications from front to back.
+        stack — MongoDB, Express.js, React.js, and Node.js — along with Next.js
+        for production-grade, server-rendered applications.
       </p>
       <p>
         I focus on crafting clean UI/UX and writing efficient backend logic to
         convert complex ideas into smooth digital solutions. Whether it's an
         interactive user interface or a robust API, I care about delivering
-        work that's ready for real users and real business needs.
+        work that's ready for real users and real business needs.I can also build Desktops apps
+        in JAVA and Python with complete frontend and backend
       </p>
     </div>
   </div>
 </section>
 
 <!-- ===================== EDUCATION ===================== -->
-<section class="section alt-bg" id="education">
-  <div class="section-inner">
-    <div class="section-content" data-reveal>
+<section class="section alt-bg image-bg" id="education" style="--section-image:url('images/2.jpg');">
+  <div class="section-bg" data-reveal></div>
+  <div class="section-inner-single">
+    <div class="section-panel" data-reveal>
       <p class="section-tag">Education</p>
       <h2>Academic background</h2>
 
@@ -126,7 +131,7 @@
           <div class="timeline-marker"></div>
           <div class="timeline-body">
             <h3>BS Software Engineering</h3>
-            <p class="timeline-meta">NUML University · 3rd Semester · CGPA 3.87</p>
+            <p class="timeline-meta">NUML University · 3rd Semester · CGPA 3.87 . (2025-present)</p>
             <p>Currently building a strong foundation in software design, data
               structures, and full-stack development practices.</p>
           </div>
@@ -147,49 +152,37 @@
         </li>
       </ul>
     </div>
-    <div class="section-media" data-reveal>
-      <div class="blur-image-wrap">
-        <!-- Replace with your own photo path -->
-        <img src="images/education.jpg" alt="Education" class="blur-image" />
-      </div>
-    </div>
   </div>
 </section>
 
 <!-- ===================== SKILLS ===================== -->
-<section class="section" id="skills">
-  <div class="section-inner reverse">
-    <div class="section-media" data-reveal>
-      <div class="blur-image-wrap">
-        <!-- Replace with your own photo path -->
-        <img src="images/skills.jpg" alt="Skills" class="blur-image" />
-      </div>
-    </div>
-    <div class="section-content" data-reveal>
+<section class="section image-bg" id="skills" style="--section-image:url('images/2.jpg');">
+  <div class="section-bg" data-reveal></div>
+  <div class="section-inner-single wide">
+    <div class="section-panel" data-reveal>
       <p class="section-tag">Skills</p>
-      <h2>Tools & technologies I work with</h2>
-      <p>Update this list any time your stack grows — it's a plain array in script.js.</p>
+      <h2>Technical proficiencies</h2>
+      <p>
+        A well-rounded, full-stack skill set — from building responsive
+        interfaces to designing efficient, scalable backend systems, and
+        shipping them to production.
+      </p>
 
-      <div class="skills-grid" id="skillsGrid">
-        <!-- Populated by script.js from the SKILLS array -->
+      <div class="skills-categories" id="skillsGrid">
+        <!-- Populated by script.js from the SKILL_CATEGORIES array -->
       </div>
     </div>
   </div>
 </section>
 
 <!-- ===================== PROJECTS ===================== -->
-<section class="section alt-bg" id="projects">
-  <div class="section-inner">
-    <div class="section-content" data-reveal>
+<section class="section alt-bg image-bg" id="projects" style="--section-image:url('images/2.jpg');">
+  <div class="section-bg" data-reveal></div>
+  <div class="section-inner-single">
+    <div class="section-panel" data-reveal>
       <p class="section-tag">Projects</p>
       <h2>Selected work</h2>
       <p>A few projects that show how I take an idea from front end to back end.</p>
-    </div>
-    <div class="section-media" data-reveal>
-      <div class="blur-image-wrap">
-        <!-- Replace with your own photo path -->
-        <img src="images/projects.jpg" alt="Projects" class="blur-image" />
-      </div>
     </div>
   </div>
 
@@ -201,10 +194,14 @@
       <h3>Netflix Clone</h3>
       <p>A responsive streaming-platform clone with browsable rows, movie
         details, and a modern dark UI inspired by Netflix.</p>
+      <div class="tech-tags">
+        <span class="tech-tag">HTML</span>
+        <span class="tech-tag">CSS</span>
+        <span class="tech-tag">Responsive Design</span>
+      </div>
       <div class="project-links">
-        <!-- Paste your live/GitHub links here -->
-        <a href="#" target="_blank" rel="noopener">Live Demo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        <a href="#" target="_blank" rel="noopener">Code <i class="fa-brands fa-github"></i></a>
+        <a href="https://stream-app-ashy-39.vercel.app/" target="_blank" rel="noopener">Live Demo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a href="https://github.com/Ahmad-215/NETFLIX-Clone" target="_blank" rel="noopener">Code <i class="fa-brands fa-github"></i></a>
       </div>
     </article>
 
@@ -215,9 +212,12 @@
       <h3>Hospital Management System</h3>
       <p>A system to manage patient records, appointments, and staff — built
         to simplify day-to-day hospital administration.</p>
+      <div class="tech-tags">
+        <span class="tech-tag">JAVA</span>
+        <span class="tech-tag">My SQL</span>
+      </div>
       <div class="project-links">
-        <a href="#" target="_blank" rel="noopener">Live Demo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        <a href="#" target="_blank" rel="noopener">Code <i class="fa-brands fa-github"></i></a>
+        <a href="https://github.com/Ahmad-215/All-Projects" target="_blank" rel="noopener">Code <i class="fa-brands fa-github"></i></a>
       </div>
     </article>
 
@@ -228,11 +228,90 @@
       <h3>CodeNotes</h3>
       <p>A programming notes and resources website built with the MERN stack,
         covering Python, MySQL, Java, C++, and web development.</p>
+      <div class="tech-tags">
+        <span class="tech-tag">Next.js</span>
+        <span class="tech-tag">MySQL</span>
+        <span class="tech-tag">Vercel</span>
+      </div>
       <div class="project-links">
-        <a href="#" target="_blank" rel="noopener">Live Demo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        <a href="#" target="_blank" rel="noopener">Code <i class="fa-brands fa-github"></i></a>
+        <a href="https://codenotes-rho.vercel.app/" target="_blank" rel="noopener">Live Demo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a href="https://github.com/Ahmad-215/Codenotes" target="_blank" rel="noopener">Code <i class="fa-brands fa-github"></i></a>
       </div>
     </article>
+  </div>
+</section>
+
+<!-- ===================== AI INTEGRATION ===================== -->
+<section class="section image-bg" id="ai-capabilities" style="position: relative;">
+  <div class="section-bg" style="background-image: url('images/2.jpg'); opacity: 0.99;"></div>
+
+  <div class="section-inner-single wide">
+    <div class="section-panel" data-reveal>
+      <p class="section-tag">AI-Powered Workflow</p>
+      <h2>Accelerated Web Development with Modern AI</h2>
+      <p>
+        I leverage advanced AI tools and workflows to drastically speed up web development, engineer efficient code, and build modern, scalable web applications in record time without compromising quality.
+      </p>
+
+      <div class="skills-grid" style="margin-top: 24px;">
+        <span class="skill-chip">
+          <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+          <span>Rapid AI Prototyping</span>
+        </span>
+        <span class="skill-chip">
+          <i class="fa-solid fa-code-compare" aria-hidden="true"></i>
+          <span>AI-Assisted Refactoring</span>
+        </span>
+        <span class="skill-chip">
+          <i class="fa-solid fa-bolt-lightning" aria-hidden="true"></i>
+          <span>Accelerated Full-Stack Delivery</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHY CHOOSE ME ===================== -->
+<section class="section alt-bg image-bg" id="why-choose-me" style="position: relative;">
+  <div class="section-bg" style="background-image: url('images/2.jpg'); opacity: 0.29;"></div>
+
+  <div class="section-inner-single wide">
+    <div class="section-panel" data-reveal>
+      <p class="section-tag">Why Work With Me</p>
+      <h2>Value I Bring To Your Projects</h2>
+      <p>
+        Building web applications isn't just about writing code — it's about solving real problems, delivering performance, and providing a seamless user experience.
+      </p>
+
+      <div class="skills-categories" style="margin-top: 32px;">
+        <div class="skills-category" data-reveal>
+          <p class="skills-category-title">
+            <i class="fa-solid fa-layer-group" style="margin-right: 8px;"></i> Full-Stack Expertise
+          </p>
+          <p style="margin: 0; font-size: 0.9rem; color: var(--text-soft);">
+            From responsive React/Next.js interfaces to secure Express & MongoDB backends, I handle end-to-end development cleanly.
+          </p>
+        </div>
+
+        <div class="skills-category" data-reveal>
+          <p class="skills-category-title">
+            <i class="fa-solid fa-gauge-high" style="margin-right: 8px;"></i> Speed & Performance
+          </p>
+          <p style="margin: 0; font-size: 0.9rem; color: var(--text-soft);">
+            By integrating modern AI-driven workflows, I write optimized code rapidly, drastically reducing time-to-market.
+          </p>
+        </div>
+
+        <div class="skills-category" data-reveal>
+          <p class="skills-category-title">
+            <i class="fa-solid fa-check-double" style="margin-right: 8px;"></i> Production-Ready Quality
+          </p>
+          <p style="margin: 0; font-size: 0.9rem; color: var(--text-soft);">
+            I focus on clean code structure, scalability, responsive design, and smooth user experiences ready for business deployment.
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -240,8 +319,8 @@
 <footer class="footer" id="contact">
   <div class="footer-inner">
     <div class="footer-brand">
-      <p class="logo">Ahmad<span>.dev</span></p>
-      <p>Full-Stack Web Developer · MERN Stack</p>
+      <p class="logo">Ahmad<span>Hassan</span></p>
+      <p>Full-Stack Web Developer · MERN Stack &amp; Next.js</p>
     </div>
 
     <div class="footer-socials">
@@ -266,6 +345,6 @@
   <i class="fa-solid fa-arrow-up"></i>
 </button>
 
-<script src="Script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

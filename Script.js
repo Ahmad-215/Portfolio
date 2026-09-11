@@ -1,138 +1,549 @@
-/* ==========================================================================
-   Ahmad Hassan — Portfolio Script
-   Sections:
-     1. Skills data + render
-     2. Mobile nav toggle
-     3. Scrollspy (highlight active nav link)
-     4. Scroll-reveal animations (IntersectionObserver)
-     5. Back-to-top button
-     6. Footer year
-   ========================================================================== */
-
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ---------------------------------------------------------------------
-     1. SKILLS — edit this array any time your stack changes.
-        icon values are Font Awesome class names (fa-brands / fa-solid).
-  --------------------------------------------------------------------- */
-  const SKILLS = [
-    { name: "HTML5",       icon: "fa-brands fa-html5" },
-    { name: "CSS3",        icon: "fa-brands fa-css3-alt" },
-    { name: "JavaScript",  icon: "fa-brands fa-js" },
-    { name: "React.js",    icon: "fa-brands fa-react" },
-    { name: "Node.js",     icon: "fa-brands fa-node-js" },
-    { name: "Express.js",  icon: "fa-solid fa-server" },
-    { name: "MongoDB",     icon: "fa-solid fa-leaf" },
-    { name: "MySQL",       icon: "fa-solid fa-database" },
-    { name: "Java",        icon: "fa-solid fa-mug-hot" },
-    { name: "C++",         icon: "fa-solid fa-code" },
-    { name: "Python",      icon: "fa-brands fa-python" },
-    { name: "Git & GitHub",icon: "fa-brands fa-git-alt" },
-    { name: "REST APIs",   icon: "fa-solid fa-diagram-project" },
-    { name: "Responsive Design", icon: "fa-solid fa-mobile-screen" },
+
+  const SKILL_CATEGORIES = [
+    {
+      title: "Languages",
+      skills: [
+        {
+          name: "JavaScript (ES6+)",
+          icon: "fa-brands fa-js"
+        },
+        {
+          name: "Java",
+          icon: "fa-solid fa-mug-hot"
+        },
+        {
+          name: "C++",
+          icon: "fa-solid fa-code"
+        },
+        {
+          name: "Python",
+          icon: "fa-brands fa-python"
+        }
+      ]
+    },
+
+    {
+      title: "Frontend Development",
+      skills: [
+        {
+          name: "HTML5",
+          icon: "fa-brands fa-html5"
+        },
+        {
+          name: "CSS3",
+          icon: "fa-brands fa-css3-alt"
+        },
+        {
+          name: "React.js",
+          icon: "fa-brands fa-react"
+        },
+        {
+          name: "Next.js",
+          icon: "fa-solid fa-bolt"
+        },
+        {
+          name: "Responsive Design",
+          icon: "fa-solid fa-mobile-screen"
+        }
+      ]
+    },
+
+    {
+      title: "Backend Development",
+      skills: [
+        {
+          name: "Node.js",
+          icon: "fa-brands fa-node-js"
+        },
+        {
+          name: "Express.js",
+          icon: "fa-solid fa-server"
+        },
+        {
+          name: "REST API Design",
+          icon: "fa-solid fa-diagram-project"
+        }
+      ]
+    },
+
+    {
+      title: "Databases, Tools & Deployment",
+      skills: [
+        {
+          name: "MongoDB",
+          icon: "fa-solid fa-leaf"
+        },
+        {
+          name: "MySQL",
+          icon: "fa-solid fa-database"
+        },
+        {
+          name: "Git & GitHub",
+          icon: "fa-brands fa-git-alt"
+        },
+        {
+          name: "Vercel",
+          icon: "fa-solid fa-cloud-arrow-up"
+        }
+      ]
+    }
   ];
 
   const skillsGrid = document.getElementById("skillsGrid");
+
   if (skillsGrid) {
-    skillsGrid.innerHTML = SKILLS.map(skill => `
-      <span class="skill-chip" data-reveal>
-        <i class="${skill.icon}"></i>${skill.name}
-      </span>
-    `).join("");
+
+    skillsGrid.innerHTML = SKILL_CATEGORIES
+      .map(category => {
+
+        const skillsHTML = category.skills
+          .map(skill => `
+            <span class="skill-chip">
+              <i class="${skill.icon}" aria-hidden="true"></i>
+              <span>${skill.name}</span>
+            </span>
+          `)
+          .join("");
+
+        return `
+          <div class="skills-category" data-reveal>
+            <p class="skills-category-title">
+              ${category.title}
+            </p>
+
+            <div class="skills-grid">
+              ${skillsHTML}
+            </div>
+          </div>
+        `;
+      })
+      .join("");
   }
 
-  /* ---------------------------------------------------------------------
-     2. MOBILE NAV TOGGLE
-  --------------------------------------------------------------------- */
+
+  /* =========================================================================
+     2. MOBILE NAVIGATION
+     ========================================================================= */
+
   const navToggle = document.getElementById("navToggle");
   const navLinksWrap = document.getElementById("navLinks");
 
   if (navToggle && navLinksWrap) {
-    navToggle.addEventListener("click", () => {
-      const isOpen = navLinksWrap.classList.toggle("open");
-      navToggle.classList.toggle("open", isOpen);
-      navToggle.setAttribute("aria-expanded", String(isOpen));
+
+    const closeMobileMenu = () => {
+      navLinksWrap.classList.remove("open");
+
+      navToggle.classList.remove("open");
+
+      navToggle.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+    };
+
+    const toggleMobileMenu = () => {
+
+      const isOpen =
+        navLinksWrap.classList.toggle("open");
+
+      navToggle.classList.toggle(
+        "open",
+        isOpen
+      );
+
+      navToggle.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+      );
+    };
+
+    navToggle.addEventListener(
+      "click",
+      toggleMobileMenu
+    );
+
+
+
+    navLinksWrap
+      .querySelectorAll(".nav-link")
+      .forEach(link => {
+
+        link.addEventListener(
+          "click",
+          closeMobileMenu
+        );
+
+      });
+
+
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Escape" &&
+          navLinksWrap.classList.contains("open")
+        ) {
+          closeMobileMenu();
+
+          navToggle.focus();
+        }
+
+      }
+    );
+
+
+
+    document.addEventListener(
+      "click",
+      event => {
+
+        const clickedInsideNav =
+          navLinksWrap.contains(event.target) ||
+          navToggle.contains(event.target);
+
+        if (
+          !clickedInsideNav &&
+          navLinksWrap.classList.contains("open")
+        ) {
+          closeMobileMenu();
+        }
+
+      }
+    );
+
+  }
+      
+  const sections =
+    document.querySelectorAll("section[id]");
+
+  const navLinks =
+    document.querySelectorAll(".nav-link");
+
+  if (
+    sections.length &&
+    navLinks.length &&
+    "IntersectionObserver" in window
+  ) {
+
+    const scrollSpyObserver =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(entry => {
+
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            const sectionId =
+              entry.target.getAttribute("id");
+
+            navLinks.forEach(link => {
+
+              const isActive =
+                link.dataset.section === sectionId;
+
+              link.classList.toggle(
+                "active-link",
+                isActive
+              );
+
+            });
+
+          });
+
+        },
+        {
+          rootMargin: "-40% 0px -50% 0px",
+          threshold: 0
+        }
+      );
+
+    sections.forEach(section => {
+      scrollSpyObserver.observe(section);
     });
 
-    // Close mobile menu after clicking a link
-    navLinksWrap.querySelectorAll(".nav-link").forEach(link => {
-      link.addEventListener("click", () => {
-        navLinksWrap.classList.remove("open");
-        navToggle.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-      });
-    });
   }
 
-  /* ---------------------------------------------------------------------
-     3. SCROLLSPY — highlight the nav link for the section in view
-  --------------------------------------------------------------------- */
-  const sections = document.querySelectorAll("section[id]");
-  const navLinks = document.querySelectorAll(".nav-link");
 
-  const scrollSpyObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute("id");
-        navLinks.forEach(link => {
-          link.classList.toggle("active-link", link.dataset.section === id);
-        });
-      }
+ 
+  const revealTargets =
+    document.querySelectorAll("[data-reveal]");
+
+  const prefersReducedMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+
+  if (
+    prefersReducedMotion ||
+    !("IntersectionObserver" in window)
+  ) {
+
+    revealTargets.forEach(target => {
+      target.classList.add("in-view");
     });
-  }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
 
-  sections.forEach(section => scrollSpyObserver.observe(section));
+  } else {
 
-  /* ---------------------------------------------------------------------
-     4. SCROLL-REVEAL ANIMATIONS
-  --------------------------------------------------------------------- */
-  const revealTargets = document.querySelectorAll("[data-reveal]");
+    const revealObserver =
+      new IntersectionObserver(
+        (entries, observer) => {
 
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        // small stagger for elements revealing together
-        setTimeout(() => entry.target.classList.add("in-view"), index * 60);
-        observer.unobserve(entry.target);
+          entries.forEach(entry => {
+
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            const delay =
+              entry.target.dataset.revealDelay || 0;
+
+            setTimeout(() => {
+
+              entry.target.classList.add(
+                "in-view"
+              );
+
+            }, Number(delay));
+
+            observer.unobserve(
+              entry.target
+            );
+
+          });
+
+        },
+        {
+          threshold: 0.12,
+          rootMargin: "0px 0px -30px 0px"
+        }
+      );
+
+
+    revealTargets.forEach(
+      (target, index) => {
+
+       
+
+        target.dataset.revealDelay =
+          Math.min(index * 55, 220);
+
+        revealObserver.observe(target);
+
       }
-    });
-  }, { threshold: 0.15 });
+    );
 
-  revealTargets.forEach(target => revealObserver.observe(target));
+  }
 
-  /* ---------------------------------------------------------------------
-     5. BACK-TO-TOP BUTTON
-  --------------------------------------------------------------------- */
-  const backToTop = document.getElementById("backToTop");
+
+  
+  const backToTop =
+    document.getElementById("backToTop");
+
 
   if (backToTop) {
-    window.addEventListener("scroll", () => {
-      backToTop.classList.toggle("visible", window.scrollY > 500);
-    });
 
-    backToTop.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+    let ticking = false;
+
+
+    const updateBackToTop =
+      () => {
+
+        const shouldShow =
+          window.scrollY > 500;
+
+        backToTop.classList.toggle(
+          "visible",
+          shouldShow
+        );
+
+        ticking = false;
+      };
+
+
+    window.addEventListener(
+      "scroll",
+      () => {
+
+        if (!ticking) {
+
+          window.requestAnimationFrame(
+            updateBackToTop
+          );
+
+          ticking = true;
+        }
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+    backToTop.addEventListener(
+      "click",
+      () => {
+
+        window.scrollTo({
+          top: 0,
+          behavior: prefersReducedMotion
+            ? "auto"
+            : "smooth"
+        });
+
+      }
+    );
+
   }
 
-  /* ---------------------------------------------------------------------
-     6. FOOTER YEAR
-  --------------------------------------------------------------------- */
-  const yearEl = document.getElementById("year");
+
+  
+  const yearEl =
+    document.getElementById("year");
+
   if (yearEl) {
-    yearEl.textContent = new Date().getFullYear();
+
+    yearEl.textContent =
+      new Date().getFullYear();
+
   }
 
-  /* ---------------------------------------------------------------------
-     NAVBAR BACKGROUND ON SCROLL (subtle depth cue)
-  --------------------------------------------------------------------- */
-  const navbar = document.getElementById("navbar");
+
+  
+  const navbar =
+    document.getElementById("navbar");
+
+
   if (navbar) {
-    window.addEventListener("scroll", () => {
-      navbar.style.boxShadow = window.scrollY > 20
-        ? "0 8px 30px rgba(0,0,0,0.35)"
-        : "none";
-    });
+
+    let navTicking = false;
+
+
+    const updateNavbar =
+      () => {
+
+        const isScrolled =
+          window.scrollY > 20;
+
+
+        navbar.classList.toggle(
+          "scrolled",
+          isScrolled
+        );
+
+
+
+        navbar.style.boxShadow =
+          isScrolled
+            ? "0 12px 35px rgba(0, 0, 0, 0.55)"
+            : "none";
+
+
+        navTicking = false;
+      };
+
+
+    window.addEventListener(
+      "scroll",
+      () => {
+
+        if (!navTicking) {
+
+          window.requestAnimationFrame(
+            updateNavbar
+          );
+
+          navTicking = true;
+        }
+
+      },
+      {
+        passive: true
+      }
+    );
+
+
+
+    updateNavbar();
+
   }
+
+
+ 
+  document
+    .querySelectorAll('a[href^="#"]')
+    .forEach(link => {
+
+      link.addEventListener(
+        "click",
+        event => {
+
+          const targetId =
+            link.getAttribute("href");
+
+          if (
+            !targetId ||
+            targetId === "#"
+          ) {
+            return;
+          }
+
+
+          const target =
+            document.querySelector(
+              targetId
+            );
+
+          if (!target) {
+            return;
+          }
+
+
+          event.preventDefault();
+
+
+          target.scrollIntoView({
+            behavior:
+              prefersReducedMotion
+                ? "auto"
+                : "smooth",
+
+            block: "start"
+          });
+
+        }
+      );
+
+    });
+
+
+ 
+  document
+    .querySelectorAll("img")
+    .forEach(image => {
+
+      image.addEventListener(
+        "error",
+        () => {
+
+          image.style.opacity = "0.25";
+
+        }
+      );
+
+    });
+
+
+  
+  document.body.classList.add(
+    "page-ready"
+  );
 
 });
