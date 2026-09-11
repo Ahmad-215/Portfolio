@@ -2,9 +2,11 @@
 
 A modern, highly responsive, and interactive personal developer portfolio built with **HTML5, CSS3, and JavaScript**. Designed with custom smooth scrolling, animated section overlays, interactive cards, and a sleek dark theme aesthetic.
 
+<!-- ==================== PORTFOLIO PREVIEW IMAGE ==================== -->
 <p align="center">
-  <img src="1st.jpeg" alt="Portfolio Preview" width="200" style="border-radius: 50%;">
+  <img src="1st.jpeg" alt="Portfolio Preview" width="100%" style="border-radius: 10px; max-width: 700px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
 </p>
+<!-- ================================================================= -->
 
 ---
 
