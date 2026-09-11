@@ -39,6 +39,3 @@ A modern, highly responsive, and interactive personal developer portfolio built 
 
 Follow these simple steps to run the portfolio locally on your machine:
 
-### 1. Clone the Repository
-```bash
-git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
