@@ -2,6 +2,10 @@
 
 A modern, highly responsive, and interactive personal developer portfolio built with **HTML5, CSS3, and JavaScript**. Designed with custom smooth scrolling, animated section overlays, interactive cards, and a sleek dark theme aesthetic.
 
+<p align="center">
+  <img src="1st.jpeg" alt="Portfolio Preview" width="200" style="border-radius: 50%;">
+</p>
+
 ---
 
 ## 🌟 Key Features
@@ -24,18 +28,10 @@ A modern, highly responsive, and interactive personal developer portfolio built 
 
 ---
 
-## 📸 Section Highlights
-
-1. **Hero Section:** Rotating dynamic gradient rings around the main portrait.
-2. **About & Education:** Structured timeline detailing academic background and technical expertise.
-3. **Skills Grid:** Interactive chips displaying core web development capabilities.
-4. **AI Capabilities:** Dedicated showcase of modern AI integration in software engineering workflows.
-5. **Why Work With Me:** Core principles covering full-stack expertise and performance delivery.
-6. **Projects Gallery:** Featured full-stack and frontend applications with live demo links.
-
----
-
 ## 🚀 Getting Started
 
 Follow these simple steps to run the portfolio locally on your machine:
 
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
