@@ -3,100 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  /* ---------- 1. Rotating 3D globe behind hero photo ---------- */
   const visual = document.querySelector(".hero-visual");
   let mouse = { x: 0, y: 0 };
-
-  if (visual) {
-    const canvas = document.createElement("canvas");
-    canvas.className = "globe3d";
-    canvas.setAttribute("aria-hidden", "true");
-    visual.appendChild(canvas);
-    const ctx = canvas.getContext("2d");
-
-    let W = 0, H = 0;
-    const resize = () => {
-      const r = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      W = r.width; H = r.height;
-      canvas.width = W * dpr; canvas.height = H * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    // Fibonacci sphere points + static neighbour pairs
-    const N = 110, pts = [], pairs = [];
-    for (let i = 0; i < N; i++) {
-      const y = 1 - (2 * (i + 0.5)) / N;
-      const r = Math.sqrt(1 - y * y);
-      const t = i * 2.399963;
-      pts.push([Math.cos(t) * r, y, Math.sin(t) * r]);
-    }
-    for (let i = 0; i < N; i++) {
-      for (let j = i + 1; j < N; j++) {
-        const dx = pts[i][0] - pts[j][0], dy = pts[i][1] - pts[j][1], dz = pts[i][2] - pts[j][2];
-        if (dx * dx + dy * dy + dz * dz < 0.23) pairs.push([i, j]);
-      }
-    }
-
-    let rotY = 0, rotX = 0.35, sx = 0, sy = 0, running = true;
-    const proj = new Array(N);
-
-    const draw = () => {
-      sx += (mouse.x - sx) * 0.05;
-      sy += (mouse.y - sy) * 0.05;
-      const a = rotY + sx * 0.6, b = rotX + sy * 0.35;
-      const ca = Math.cos(a), sa = Math.sin(a), cb = Math.cos(b), sb = Math.sin(b);
-      const R = Math.min(W, H) * 0.46, cx = W / 2, cy = H / 2, d = 3.2;
-
-      ctx.clearRect(0, 0, W, H);
-
-      for (let i = 0; i < N; i++) {
-        const [x, y, z] = pts[i];
-        const x1 = x * ca + z * sa, z1 = -x * sa + z * ca;
-        const y2 = y * cb - z1 * sb, z2 = y * sb + z1 * cb;
-        const s = d / (d - z2);
-        proj[i] = [cx + x1 * s * R, cy + y2 * s * R, z2, s];
-      }
-
-      ctx.lineWidth = 1;
-      for (const [i, j] of pairs) {
-        const p = proj[i], q = proj[j];
-        const depth = (p[2] + q[2]) / 2;
-        ctx.strokeStyle = `rgba(34,211,238,${(0.05 + 0.3 * (depth + 1) / 2).toFixed(3)})`;
-        ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
-      }
-
-      for (let i = 0; i < N; i++) {
-        const p = proj[i];
-        const al = 0.2 + 0.8 * (p[2] + 1) / 2;
-        ctx.fillStyle = i % 3 === 0 ? `rgba(129,140,248,${al})` : `rgba(34,211,238,${al})`;
-        ctx.beginPath(); ctx.arc(p[0], p[1], 1.2 + 1.8 * p[3] * (p[2] + 1) / 2, 0, 6.2832); ctx.fill();
-      }
-    };
-
-    const loop = () => {
-      if (!running) return;
-      rotY += 0.003;
-      draw();
-      requestAnimationFrame(loop);
-    };
-
-    resize();
-    window.addEventListener("resize", () => { resize(); if (reduce) draw(); });
-
-    if (reduce) {
-      draw();
-    } else {
-      if ("IntersectionObserver" in window) {
-        new IntersectionObserver(([e]) => {
-          const was = running;
-          running = e.isIntersecting;
-          if (running && !was) requestAnimationFrame(loop);
-        }).observe(visual);
-      }
-      requestAnimationFrame(loop);
-    }
-  }
 
   if (reduce || !finePointer) return; // tilt effects: mouse only
 
@@ -159,19 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
   bar.className = "scroll-progress";
   document.body.appendChild(bar);
 
-  // floating 3D cubes in hero
-  const hero = document.getElementById("home");
-  if (hero) {
-    const wrap = document.createElement("div");
-    wrap.className = "hero-shapes";
-    wrap.setAttribute("aria-hidden", "true");
-    [["6%", "22%", 54, "22s"], ["88%", "16%", 38, "28s"], ["46%", "86%", 30, "18s"]].forEach(([l, t, s, d], k) => {
-      wrap.insertAdjacentHTML("beforeend",
-        `<div class="cube-wrap" data-depth="${k + 1}" style="left:${l};top:${t}"><div class="cube" style="--s:${s}px;--d:${d}"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>`);
-    });
-    hero.prepend(wrap);
-  }
-
   // cursor light
   if (fine && !reduce) {
     const glow = document.createElement("div");
@@ -189,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // scroll: progress + parallax
   const bgs = [...document.querySelectorAll(".section-bg")];
-  const cubes = [...document.querySelectorAll(".cube-wrap")];
   let ticking = false;
   const onScroll = () => {
     const y = window.scrollY;
@@ -202,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const off = r.top + r.height / 2 - window.innerHeight / 2;
         bg.style.setProperty("--py", (-off * 0.08).toFixed(1) + "px");
       });
-      cubes.forEach(c => { c.style.translate = `0 ${(-y * 0.07 * c.dataset.depth).toFixed(1)}px`; });
     }
     ticking = false;
   };
